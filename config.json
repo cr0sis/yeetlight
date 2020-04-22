@@ -8,5 +8,29 @@
             "name": "Desk Lamp",
             "ip": "192.168.0.41"
         }
-    ]
+    ],
+    "buttons": {
+        "on": true,
+        "off": true,
+        "custom": [
+            {
+                "name": "Daylight Bright",
+                "profile": "daytime",
+                "bg": "black",
+                "fg": "gold"
+            },
+            {
+                "name": "Night Mode",
+                "profile": "nighttime",
+                "bg": "black",
+                "fg": "blue"
+            },
+            {
+                "name": "PINK",
+                "profile": "pink",
+                "bg": "#FF00FF",
+                "fg": "white"
+            }
+        ]
+    }
 }

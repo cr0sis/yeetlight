@@ -1,0 +1,9 @@
+{
+    "profile": {
+        "name": "Day Time",
+        "author": "barf",
+        "rgb": [201, 226, 255],
+        "brightness": 100,
+        "colour_temp": 5000
+    }
+}
