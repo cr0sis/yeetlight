@@ -1,5 +1,5 @@
 # yeetlight
-A python GUI script to control Yeelight (xiaomi) smartbulbs
+A python GUI script with multi bulb profile support, to control Yeelight (xiaomi) smartbulbs.
 
 This is a very early draft with just 4 options, which I use the most. See todo.txt for more information.
 
@@ -33,11 +33,11 @@ hotkey menu
         
 brightness
         
-warmth(K)
+warmth(K) 
         
 colourpicker
         
-multi bulb support
+<s>multi bulb support</s>
         
 sliders
 
