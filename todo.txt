@@ -1,5 +1,7 @@
 Todo
 
+Main: convert project gui from tkinter to pysimplegui
+
 Light modes -
 Sunset
 Sunrise
