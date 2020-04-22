@@ -17,6 +17,6 @@ You need to connect the light using the Yeelight app (or using any other appropr
 
 `sudo apt install nmap`
 
-`nmap -sn 192.168.1.* > nmapresult.txt` (your 1 might be different so change it based on your router)
+`nmap -sn 192.168.1.* > nmapresult.txt` Your 1 might be different so change it based on your router, use `ifconfig` to find your ip range.
 
 `nano nmapresult.txt`
