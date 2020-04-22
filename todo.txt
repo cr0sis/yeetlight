@@ -11,13 +11,13 @@ Date Night
 Movie Night
 rainbow mode
 
-configurables -
-optional default instead of forced per mode switch
+Configurables -
+optional default when changing mode, instead of forced per mode switch. Currently any mode change sets itself as default, meaning if you flip the main switch off and on it automatically remembers last config. 
 hotkey menu
 hue
 multi bulb support
 sliders!!
 
-fluff -
+Fluff -
 irc highlights
 bin day notification
