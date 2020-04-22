@@ -20,3 +20,46 @@ You need to connect the light using the Yeelight app (or using any other appropr
 `nmap -sn 192.168.1.* > nmapresult.txt` Your 1 might be different so change it based on your router, use `ifconfig` to find your ip range.
 
 `nano nmapresult.txt`
+
+#### To-do
+
+Main: 
+
+        -Convert project gui from tkinter to pysimplegui
+        
+        -Optional default when changing mode, instead of forced per mode switch. Currently any mode change sets itself as    default, meaning if you flip the main switch off and on it automatically remembers last config. 
+        
+        -systray
+        
+        -hotkey menu
+        
+        -brightness
+        
+        -warmth(K)
+        
+        -colourpicker
+        
+        -multi bulb support
+        
+        -sliders!!
+Light modes:
+
+        -Sunset
+        
+        -Sunrise
+        
+        -Home
+        
+        -Romance
+        
+        -Date Night
+        
+        -Movie Night
+        
+        -rainbow mode
+
+
+
+Fluff:
+        -irc highlights
+        -bin day notification
