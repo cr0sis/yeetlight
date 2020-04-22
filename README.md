@@ -39,9 +39,7 @@ colourpicker
         
 multi bulb support
         
-sliders!!
-
-#Light modes:
+sliders
 
 Sunset
         
