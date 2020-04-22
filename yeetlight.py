@@ -1,40 +1,44 @@
 #!/usr/bin/env python3
 from tkinter import *
 from yeelight import Bulb
-bulb = Bulb("YOUR.IP.HERE", effect="smooth", duration=750, auto_on=True) # Set IP, find in router or phone app. Keep the quotes!
-bulb.turn_on()
 
-class Bulb:
+class YeetBulb:
+    def __init__(self, ip):
+        self.ip = ip
+        self.bulb = Bulb(self.ip, effect="smooth", duration=750, auto_on=True)
 
-    def __init__(self, name):
-        self.name = name
-        self.ip = []    # creates a new empty list for each IP
+    def turnoff(self):
+        self.bulb.turn_off()
 
-    def add_ip(self, ip):
-        self.ip.append(ip)
+    def turnon(self):
+        self.bulb.turn_on()
 
-def turnoff():
-    bulb.turn_off()
-def turnon():
-    bulb.turn_on()
-def day():
-    bulb.set_brightness(100)
-    bulb.set_color_temp(4700)
-    bulb.set_default()
-def night():
-    bulb.set_brightness(5)
-    bulb.set_color_temp(2700)
-    bulb.set_default()
+    def day(self):
+        self.bulb.set_brightness(100)
+        self.bulb.set_color_temp(4700)
+        self.bulb.set_default()
+
+    def night(self):
+        self.bulb.set_brightness(5)
+        self.bulb.set_color_temp(2700)
+        self.bulb.set_default()
+#   def pink(self):
+#       self.bulb.set_rgb(255,192,203)
+
+
+
+bulb = YeetBulb('YOUR.IP.HERE') # See Readme on how to find IP
+bulb.turnon() # Turn on to last known default when we start the script
 
 yeetlight = Tk()
 yeetlight.title('Yeetlight v0.1')
 
 topFrame = Frame(yeetlight)
 topFrame.pack()
-buttonOff = Button(topFrame, text="Off", bg="black", fg="red", command=turnoff)
-buttonOn = Button(topFrame, text="On", bg="black", fg="green", command=turnon)
-buttonNightmode = Button(topFrame, text="Night mode", bg="black", fg="blue", command=night)
-buttonDaylight = Button(topFrame, text="Daylight bright", bg="black", fg="gold", command=day)
+buttonOff = Button(topFrame, text="Off", bg="black", fg="red", command=bulb.turnoff)
+buttonOn = Button(topFrame, text="On", bg="black", fg="green", command=bulb.turnon)
+buttonNightmode = Button(topFrame, text="Night mode", bg="black", fg="blue", command=bulb.night)
+buttonDaylight = Button(topFrame, text="Daylight bright", bg="black", fg="gold", command=bulb.day)
 buttonOn.pack(side=LEFT)
 buttonOff.pack(side=LEFT)
 buttonDaylight.pack(side=LEFT)
