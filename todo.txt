@@ -14,7 +14,7 @@ optional default instead of forced per mode switch
 hotkey menu
 hue
 multi bulb support
-sliders
+sliders!!
 
 fluff -
 irc highlights
