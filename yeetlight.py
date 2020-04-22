@@ -3,6 +3,16 @@ from tkinter import *
 from yeelight import Bulb
 bulb = Bulb("YOUR.IP.HERE", effect="smooth", duration=750, auto_on=True) # Set IP, find in router or phone app. Keep the quotes!
 bulb.turn_on()
+
+class Bulb:
+
+    def __init__(self, name):
+        self.name = name
+        self.ip = []    # creates a new empty list for each IP
+
+    def add_ip(self, ip):
+        self.ip.append(ip)
+
 def turnoff():
     bulb.turn_off()
 def turnon():
@@ -15,8 +25,10 @@ def night():
     bulb.set_brightness(5)
     bulb.set_color_temp(2700)
     bulb.set_default()
+
 yeetlight = Tk()
 yeetlight.title('Yeetlight v0.1')
+
 topFrame = Frame(yeetlight)
 topFrame.pack()
 buttonOff = Button(topFrame, text="Off", bg="black", fg="red", command=turnoff)
@@ -27,6 +39,8 @@ buttonOn.pack(side=LEFT)
 buttonOff.pack(side=LEFT)
 buttonDaylight.pack(side=LEFT)
 buttonNightmode.pack(side=LEFT)
+
 yeetlight.call('wm', 'attributes', '.', '-topmost', '1') # Force on top of other windows, delete if you wish
+
 yeetlight.mainloop()
 
