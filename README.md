@@ -23,8 +23,6 @@ You need to connect the light using the Yeelight app (or using any other appropr
 
 #### To-do
 
-#Main 
-
 Convert project gui from tkinter to pysimplegui
         
 Optional default when changing mode, instead of forced per mode switch. 
@@ -58,10 +56,6 @@ Date Night
 Movie Night
         
 rainbow mode
-
-
-
-Fluff:
 
 irc highlights
 
