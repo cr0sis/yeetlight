@@ -1,50 +1,58 @@
 #!/usr/bin/env python3
 from tkinter import *
 from yeelight import Bulb
+from yeetbulb import YeetBulb
+import json
 
-class YeetBulb:
-    def __init__(self, ip):
-        self.ip = ip
-        self.bulb = Bulb(self.ip, effect="smooth", duration=750, auto_on=True)
+current = 0
 
-    def turnoff(self):
-        self.bulb.turn_off()
+def turnon():
+    bulbs[current].turnon()
+def turnoff():
+    bulbs[current].turnoff()
+def day():
+    bulbs[current].day()
+def night():
+    bulbs[current].night()
 
-    def turnon(self):
-        self.bulb.turn_on()
+#load config
+with open('config.json', 'r') as f:
+    config = json.load(f)
 
-    def day(self):
-        self.bulb.set_brightness(100)
-        self.bulb.set_color_temp(4700)
-        self.bulb.set_default()
+bulbs = []
+for bulb in config['bulbs']:
+    bulbs.append(YeetBulb(bulb['name'], bulb['ip']))
 
-    def night(self):
-        self.bulb.set_brightness(5)
-        self.bulb.set_color_temp(2700)
-        self.bulb.set_default()
-#   def pink(self):
-#       self.bulb.set_rgb(255,192,203)
-
-
-
-bulb = YeetBulb('YOUR.IP.HERE') # See Readme on how to find IP
-bulb.turnon() # Turn on to last known default when we start the script
-
+#create window
 yeetlight = Tk()
-yeetlight.title('Yeetlight v0.1')
-
+yeetlight.title('Yeetlight')
 topFrame = Frame(yeetlight)
 topFrame.pack()
-buttonOff = Button(topFrame, text="Off", bg="black", fg="red", command=bulb.turnoff)
-buttonOn = Button(topFrame, text="On", bg="black", fg="green", command=bulb.turnon)
-buttonNightmode = Button(topFrame, text="Night mode", bg="black", fg="blue", command=bulb.night)
-buttonDaylight = Button(topFrame, text="Daylight bright", bg="black", fg="gold", command=bulb.day)
+
+#create buttons
+buttonOn = Button(topFrame, text="On", bg="black", fg="green", command=turnon)
 buttonOn.pack(side=LEFT)
+buttonOff = Button(topFrame, text="Off", bg="black", fg="red", command=turnoff)
 buttonOff.pack(side=LEFT)
+buttonDaylight = Button(topFrame, text="Daylight bright", bg="black", fg="gold", command=day)
 buttonDaylight.pack(side=LEFT)
+buttonNightmode = Button(topFrame, text="Night mode", bg="black", fg="blue", command=night)
 buttonNightmode.pack(side=LEFT)
 
+#create light dropdown
+tkvar = StringVar(yeetlight)
+choices = [x["name"] for x in bulbs]
+choices = dict(zip(choices,range(len(choices))))
+OptionMenu(topFrame, tkvar, *choices.keys()).pack()
+tkvar.set('Select')
+
+# on change dropdown value
+def change_dropdown(*args):
+    global current
+    current = choices[tkvar.get()]
+
+# link function to change dropdown
+tkvar.trace('w', change_dropdown)
+
 yeetlight.call('wm', 'attributes', '.', '-topmost', '1') # Force on top of other windows, delete if you wish
-
 yeetlight.mainloop()
-
