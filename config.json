@@ -5,7 +5,7 @@
             "ip": "192.168.0.40"
         },
         {
-            "name": "Desk Lamp",
+            "name": "Desk",
             "ip": "192.168.0.41"
         }
     ],
@@ -32,5 +32,25 @@
                 "fg": "white"
             }
         ]
+    },
+    "tray_menu": {
+        "on": true,
+        "off": true,
+        "custom": [
+            {
+                "name": "Daylight Bright",
+                "profile": "daytime"
+            },
+            {
+                "name": "Night Mode",
+                "profile": "nighttime"
+            },
+            {
+                "name": "PINK",
+                "profile": "pink"
+            }
+        ],
+        "profiles": true,
+        "exit": true
     }
 }

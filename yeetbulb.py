@@ -16,6 +16,9 @@ class YeetBulb:
     def turnon(self):
         self.bulb.turn_on()
 
+    def toggle(self):
+        self.bulb.toggle()
+
     def loadProfile(self, profile):
         with open('profiles/' + profile + '.json', 'r') as f:
             config = json.load(f)
