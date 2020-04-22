@@ -23,43 +23,46 @@ You need to connect the light using the Yeelight app (or using any other appropr
 
 #### To-do
 
-Main: 
+#Main 
 
-        -Convert project gui from tkinter to pysimplegui
+Convert project gui from tkinter to pysimplegui
         
-        -Optional default when changing mode, instead of forced per mode switch. Currently any mode change sets itself as    default, meaning if you flip the main switch off and on it automatically remembers last config. 
+Optional default when changing mode, instead of forced per mode switch. 
+         
+systray
         
-        -systray
+hotkey menu
         
-        -hotkey menu
+brightness
         
-        -brightness
+warmth(K)
         
-        -warmth(K)
+colourpicker
         
-        -colourpicker
+multi bulb support
         
-        -multi bulb support
-        
-        -sliders!!
-Light modes:
+sliders!!
 
-        -Sunset
+#Light modes:
+
+Sunset
         
-        -Sunrise
+Sunrise
         
-        -Home
+Home
         
-        -Romance
+Romance
         
-        -Date Night
+Date Night
         
-        -Movie Night
+Movie Night
         
-        -rainbow mode
+rainbow mode
 
 
 
 Fluff:
-        -irc highlights
-        -bin day notification
+
+irc highlights
+
+bin day notification
