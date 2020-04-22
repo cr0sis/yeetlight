@@ -19,6 +19,8 @@ You need to connect the light using the Yeelight app (or using any other appropr
 
 `nano nmapresult.txt`
 
+Edit your config.json file with the IP(s) of you bulb(s).
+
 ## To-do
 
 Convert project gui from tkinter to pysimplegui
