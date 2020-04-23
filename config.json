@@ -13,18 +13,19 @@
     "buttons": {
         "on": true,
         "off": true,
+        "hide": true,
         "custom": [
             {
-                "name": "Daylight Bright",
-                "profile": "daytime",
-                "bg": "black",
-                "fg": "gold"
+                "name": "Tungston 100W",
+                "profile": "tungston100w",
+                "bg": "rgb(71, 26, 0)",
+                "fg": "rgb(255, 157, 100)"
             },
             {
                 "name": "Night Mode",
                 "profile": "nighttime",
                 "bg": "black",
-                "fg": "blue"
+                "fg": "rgb(134, 0, 134)"
             },
             {
                 "name": "PINK",
@@ -53,6 +54,6 @@
         ],
         "profiles": true,
         "exit": true,
-        "left_click": "Toggle"
+        "left_click": "Show"
     }
 }

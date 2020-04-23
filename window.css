@@ -1,20 +1,15 @@
-.main-widget{
-    color: rgba(237,174,28,100%);
-    background-color: rgba(0, 0, 0, 0.8);
-    border-radius: 150px;
-    border: 0px;
-    padding: 0px;
+QMainWindow {
+    background-color: rgb(37, 37, 37);
 }
 
-QPushButton {
-    background-color: red;
+QPushButton[big=true] {
+    background-color: black;
+    color: white;
     height: 100%;
 }
 
-QMenu::item {
-    padding: 2px 5px 2px 2px;
-}
-QMenu::item:selected {
-    background-color: rgb(0, 85, 127);
-    color: rgb(255, 255, 255);
+QPushButton[custom=true] {
+    background-color: white;
+    color: black;
+    height: 100%;
 }

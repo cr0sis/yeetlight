@@ -31,21 +31,16 @@ class MainWindow(QMainWindow):
         self.setWindowTitle("YeeLight")
         
         # main widget
-        main_widget = QWidget(self)
-        main_widget.setProperty('class', 'main-widget')
-        self.setCentralWidget(main_widget)
+        self.main_widget = QWidget(self)
+        self.main_widget.setProperty('main', True)
+        self.setCentralWidget(self.main_widget)
         self.setStyleSheet(open('window.css').read())
-        grid_layout = QGridLayout(self)
-        main_widget.setLayout(grid_layout)
 
         # controls
-        self.btn1 = QPushButton('Red')
-        grid_layout.addWidget(self.btn1, 1, 0)
-        self.btn1.clicked.connect(self.commandFromMain)
-
-        self.btn2 = QPushButton('Red')
-        grid_layout.addWidget(self.btn2, 1, 1)
-        self.btn2.clicked.connect(self.commandFromMain)
+        self.grid_layout = QGridLayout(self)
+        self.grid_layout.setProperty('main', True)
+        self.main_widget.setLayout(self.grid_layout)
+        self.buildControls()
 
         # tray menu
         self.tray_icon = QSystemTrayIcon(self)
@@ -58,6 +53,34 @@ class MainWindow(QMainWindow):
         x = screen.width() - widget.width()
         y = (screen.height() - 60) - widget.height()
         self.move(x, y)
+
+    def buildControls(self):
+        global current
+
+        if 'on' in config['buttons'] and config['buttons']['on'] == True:
+            onBtn = QPushButton('On')
+            onBtn.setProperty('big', True)
+            onBtn.clicked.connect(self.turnOn)
+            self.grid_layout.addWidget(onBtn, 1, 0)
+        if 'off' in config['buttons'] and config['buttons']['off'] == True:
+            offBtn = QPushButton('Off')
+            offBtn.setProperty('big', True)
+            offBtn.clicked.connect(self.turnOff)
+            self.grid_layout.addWidget(offBtn, 1, 1)
+        if 'hide' in config['buttons'] and config['buttons']['hide'] == True:
+            hideBtn = QPushButton('Hide')
+            hideBtn.setProperty('big', True)
+            hideBtn.clicked.connect(self.hide)
+            self.grid_layout.addWidget(hideBtn, 1, 2)
+        pos = 0
+        for custom_button in config['buttons']['custom']:
+            customBtn = QPushButton(custom_button['name'])
+            customBtn.setProperty('custom', True)
+            if 'bg' in custom_button or 'fg' in custom_button:
+                customBtn.setStyleSheet("background-color: " + custom_button['bg'] + "; color: " + custom_button['fg'] + ";")
+            customBtn.clicked.connect(partial(self.setProfile, custom_button['profile']))
+            self.grid_layout.addWidget(customBtn, 2, pos)
+            pos += 1
 
     def buildTray(self):
         global current
@@ -116,25 +139,27 @@ class MainWindow(QMainWindow):
     def setProfile(self, profile):
         global current
         bulbs[current].loadProfile(profile)
+        self.hide()
 
     def setCurrent(self, bulb):
         global current
         current = bulb
         self.buildTray()
+        self.hide()
 
     def turnOn(self):
         global current
         bulbs[current].bulb.turn_on()
+        self.hide()
 
     def turnOff(self):
         global current
         bulbs[current].bulb.turn_off()
+        self.hide()
 
     def toggle(self):
         global current
         bulbs[current].bulb.toggle()
-
-    def commandFromMain(self, command):
         self.hide()
 
     def onTrayIconActivated(self, reason):
