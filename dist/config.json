@@ -1,0 +1,56 @@
+{
+    "bulbs": [
+        {
+            "name": "Main Bulb",
+            "ip": "192.168.0.40"
+        },
+        {
+            "name": "Desk",
+            "ip": "192.168.0.41"
+        }
+    ],
+    "buttons": {
+        "on": true,
+        "off": true,
+        "custom": [
+            {
+                "name": "Daylight Bright",
+                "profile": "daytime",
+                "bg": "black",
+                "fg": "gold"
+            },
+            {
+                "name": "Night Mode",
+                "profile": "nighttime",
+                "bg": "black",
+                "fg": "blue"
+            },
+            {
+                "name": "PINK",
+                "profile": "pink",
+                "bg": "#FF00FF",
+                "fg": "white"
+            }
+        ]
+    },
+    "tray_menu": {
+        "on": true,
+        "off": true,
+        "custom": [
+            {
+                "name": "Daylight Bright",
+                "profile": "daytime"
+            },
+            {
+                "name": "Night Mode",
+                "profile": "nighttime"
+            },
+            {
+                "name": "PINK",
+                "profile": "pink"
+            }
+        ],
+        "profiles": true,
+        "exit": true
+    }
+}

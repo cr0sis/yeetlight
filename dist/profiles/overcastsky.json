@@ -1,0 +1,9 @@
+{
+    "profile": {
+        "name": "Overcast Sky",
+        "author": "barf",
+        "rgb": [201, 226, 255],
+        "brightness": 100,
+        "color_temp": 5000
+    }
+}

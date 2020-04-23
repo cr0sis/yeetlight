@@ -6,7 +6,8 @@ class YeetBulb:
         self.name = name
         self.ip = ip
         self.bulb = Bulb(self.ip, effect="smooth", duration=750, auto_on=True)
-        
+        self.properties = self.bulb.get_properties()
+
     def __getitem__(self, key):
         return getattr(self, key)
 
@@ -48,3 +49,6 @@ class YeetBulb:
             self.bulb.set_color_temp(profile['color_temp'])
         
         #self.bulb.set_default()
+    
+    def updateProperties(self):
+        self.properties = self.bulb.get_properties()

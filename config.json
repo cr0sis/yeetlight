@@ -9,6 +9,7 @@
             "ip": "192.168.0.41"
         }
     ],
+    "default": 0,
     "buttons": {
         "on": true,
         "off": true,
@@ -51,6 +52,7 @@
             }
         ],
         "profiles": true,
-        "exit": true
+        "exit": true,
+        "left_click": "Toggle"
     }
 }
