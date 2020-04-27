@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import *
 from PyQt5.QtCore import QSize, Qt
-from PyQt5.QtGui import QIcon
+from PyQt5.QtGui import *
 from yeelight import Bulb
 from functools import partial
 import json
@@ -28,7 +28,7 @@ class MainWindow(QMainWindow):
 
         self.setWindowFlags(Qt.FramelessWindowHint | Qt.WindowStaysOnTopHint | Qt.SplashScreen)
         self.setFixedSize(QSize(480, 160))
-        self.setWindowTitle("YeeLight")
+        self.setWindowTitle("YeetLight")
         
         # main widget
         self.main_widget = QWidget(self)
@@ -112,7 +112,7 @@ class MainWindow(QMainWindow):
 
         if config['tray_menu']['profiles']:
             self.tray_menu.addSeparator()
-            profiles_menu = QMenu("profiles", self)
+            profiles_menu = QMenu("Profiles", self)
             for file in os.listdir("./profiles"):
                 if file.endswith(".json"):
                     with open("./profiles/" + file, 'r') as f:
@@ -126,6 +126,10 @@ class MainWindow(QMainWindow):
             profiles_menu.addAction(update_menu)
             self.tray_menu.addMenu(profiles_menu)
             self.tray_menu.addSeparator()
+
+        set_colour = QAction("Set Colour", self)
+        set_colour.triggered.connect(self.setColour)
+        self.tray_menu.addAction(set_colour)
         
         if config['tray_menu']['exit']:
             quit_action = QAction("Exit", self)
@@ -169,6 +173,13 @@ class MainWindow(QMainWindow):
             else:
                 self.show()
         # print("onTrayIconActivated:", reason)
+
+    def setColour(self):
+        di = QColorDialog()
+        if di.exec_():
+            color = di.currentColor()
+            #bulbs[current].bulb.set_rgb(color.red(), color.green(), color.blue())
+            print(color)
 
     def closeEvent(self, event):
         self.hide()
