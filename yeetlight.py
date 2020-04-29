@@ -171,18 +171,28 @@ class MainWindow(QMainWindow):
             if config['tray_menu']['left_click'] == "Toggle":
                 self.toggle()
             else:
-                self.show()
+                if (self.isVisible()):
+                    self.hide()
+                else:
+                    self.show()
         # print("onTrayIconActivated:", reason)
 
     def setColour(self):
-        di = QColorDialog()
-        if di.exec_():
-            color = di.currentColor()
-            #bulbs[current].bulb.set_rgb(color.red(), color.green(), color.blue())
-            print(color)
+        self.picker = ColorPicker(self)
+        color = self.picker.getColor()
+        if color.isValid():
+            bulbs[current].bulb.set_rgb(color.red(), color.green(), color.blue())
+        self.hide()
 
     def closeEvent(self, event):
         self.hide()
+
+class ColorPicker(QColorDialog):
+    def __init__(self, parent=None):
+        super(ColorPicker, self).__init__(parent)
+        self.ui = QColorDialog()
+        self.ui.accepted.connect(self.accept)
+        self.ui.rejected.connect(self.reject)
 
 class YeetLight():
     def __init__(self):
@@ -190,6 +200,7 @@ class YeetLight():
         # self.updateBulbsTimer.start()
 
         self.app = QApplication(sys.argv)
+        self.app.setQuitOnLastWindowClosed(False)
         self.mw = MainWindow()
 
     def updateBulbs(self):
