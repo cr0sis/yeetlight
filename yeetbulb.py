@@ -1,5 +1,9 @@
 from yeelight import Bulb
 import json
+import sys
+import os
+
+basedir = os.path.dirname(sys.argv[0])
 
 class YeetBulb:
     def __init__(self, name, ip):
@@ -21,7 +25,7 @@ class YeetBulb:
         self.bulb.toggle()
 
     def loadProfile(self, profile):
-        with open('profiles/' + profile + '.json', 'r') as f:
+        with open(basedir + '/profiles/' + profile + '.json', 'r') as f:
             config = json.load(f)
         
         profile = config['profile']

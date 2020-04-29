@@ -1,0 +1,15 @@
+QMainWindow {
+    background-color: rgb(37, 37, 37);
+}
+
+QPushButton[big=true] {
+    background-color: black;
+    color: white;
+    height: 100%;
+}
+
+QPushButton[custom=true] {
+    background-color: white;
+    color: black;
+    height: 100%;
+}

@@ -4,9 +4,11 @@ block_cipher = None
 
 
 a = Analysis(['yeetlight.py'],
-             pathex=['C:\\Users\\Fred\\Code\\yeetlight'],
+             pathex=['C:\\Users\\Fred\\AppData\\Local\\Programs\\Python\\Python38-32\\Lib\\site-packages\\PyQt5\\Qt\\bin', 'C:\\Users\\Fred\\Code\\yeetlight'],
              binaries=[],
-             datas=[],
+             datas=[
+                 ('config.json', '.')
+             ],
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -19,19 +21,16 @@ pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
           a.scripts,
+          a.binaries,
+          a.zipfiles,
+          a.datas,
           [],
-          exclude_binaries=True,
           name='yeetlight',
           debug=False,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
-          console=True )
-coll = COLLECT(exe,
-               a.binaries,
-               a.zipfiles,
-               a.datas,
-               strip=False,
-               upx=True,
-               upx_exclude=[],
-               name='yeetlight')
+          upx_exclude=[],
+          runtime_tmpdir=None,
+          console=False,
+          icon='bulb_off.ico')
