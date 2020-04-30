@@ -12,7 +12,7 @@ from timer import Timer
 
 basedir = os.path.dirname(sys.argv[0])
 
-with open(basedir + '/config.json', 'r') as f:
+with open(basedir + 'config.json', 'r') as f:
     config = json.load(f)
 
 bulbs = []
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         self.main_widget = QWidget(self)
         self.main_widget.setProperty('main', True)
         self.setCentralWidget(self.main_widget)
-        self.setStyleSheet(open(basedir + '/window.css').read())
+        self.setStyleSheet(open(basedir + 'window.css').read())
 
         # controls
         self.grid_layout = QGridLayout(self)
@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
 
         # tray menu
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(basedir + '/bulb_off.ico'))
+        self.tray_icon.setIcon(QIcon(basedir + 'bulb_off.ico'))
         self.tray_menu = QMenu()
         self.buildTray()
 
@@ -127,9 +127,9 @@ class MainWindow(QMainWindow):
         if config['tray_menu']['profiles']:
             self.tray_menu.addSeparator()
             profiles_menu = QMenu("Profiles", self)
-            for file in os.listdir(basedir + "/profiles"):
+            for file in os.listdir(basedir + "profiles"):
                 if file.endswith(".json"):
-                    with open(basedir + "/profiles/" + file, 'r') as f:
+                    with open(basedir + "profiles/" + file, 'r') as f:
                         profile = json.load(f)
                         change_profile = QAction(profile['profile']['name'], self)
                         change_profile.triggered.connect(partial(self.setProfile, file.rsplit(".", 1)[0]))
