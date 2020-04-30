@@ -83,6 +83,18 @@ class MainWindow(QMainWindow):
             customBtn.clicked.connect(partial(self.setProfile, custom_button['profile']))
             self.grid_layout.addWidget(customBtn, 2, pos)
             pos += 1
+        if 'brightness' in config['buttons'] and config['buttons']['brightness'] == True:
+            self.brightness_slider = QSlider(Qt.Horizontal)
+            self.brightness_slider.setMinimum(0)
+            self.brightness_slider.setMaximum(100)
+            # if bulbs[current].bulb.get_properties(['current_brightness']):
+            #     self.brightness_slider.setValue(bulbs[current].bulb.get_properties(['current_brightness'][0]))
+            self.brightness_slider.setTickPosition(QSlider.TicksBelow)
+            self.brightness_slider.setTickInterval(25)
+            self.brightness_slider.setTracking(False)
+                
+            self.grid_layout.addWidget(self.brightness_slider, 3, 0, 1, 3)
+            self.brightness_slider.valueChanged.connect(partial(self.setBrightness, True))
 
     def buildTray(self):
         global current
@@ -128,6 +140,27 @@ class MainWindow(QMainWindow):
             profiles_menu.addAction(update_menu)
             self.tray_menu.addMenu(profiles_menu)
             self.tray_menu.addSeparator()
+        
+        if 'brightness' in config['tray_menu'] and config['tray_menu']['brightness']:
+            self.tray_menu.addSeparator()
+            brightness_menu = QMenu("Brightness", self)
+            brightness_100 = QAction("100%", self)
+            brightness_100.triggered.connect(partial(self.setBrightness, False, 100))
+            brightness_menu.addAction(brightness_100)
+            brightness_75 = QAction("75%", self)
+            brightness_75.triggered.connect(partial(self.setBrightness, False, 75))
+            brightness_menu.addAction(brightness_75)
+            brightness_50 = QAction("50%", self)
+            brightness_50.triggered.connect(partial(self.setBrightness, False, 50))
+            brightness_menu.addAction(brightness_50)
+            brightness_25 = QAction("25%", self)
+            brightness_25.triggered.connect(partial(self.setBrightness, False, 25))
+            brightness_menu.addAction(brightness_25)
+            brightness_0 = QAction("0%", self)
+            brightness_0.triggered.connect(partial(self.setBrightness, False, 0))
+            brightness_menu.addAction(brightness_0)
+            self.tray_menu.addMenu(brightness_menu)
+            self.tray_menu.addSeparator()
 
         set_colour = QAction("Set Colour", self)
         set_colour.triggered.connect(self.setColour)
@@ -167,6 +200,13 @@ class MainWindow(QMainWindow):
         global current
         bulbs[current].bulb.toggle()
         self.hide()
+
+    def setBrightness(self, slider, brightness = 100):
+        global current
+        if slider:
+            bulbs[current].bulb.set_brightness(self.brightness_slider.value())
+        else:
+            bulbs[current].bulb.set_brightness(brightness)
 
     def onTrayIconActivated(self, reason):
         if (reason == 3):
