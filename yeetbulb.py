@@ -25,7 +25,7 @@ class YeetBulb:
         self.bulb.toggle()
 
     def loadProfile(self, profile):
-        with open(basedir + '/profiles/' + profile + '.json', 'r') as f:
+        with open(basedir + 'profiles/' + profile + '.json', 'r') as f:
             config = json.load(f)
         
         profile = config['profile']
