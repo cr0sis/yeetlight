@@ -1,0 +1,8 @@
+{
+    "name": "Material Orange",
+    "author": "barf",
+    "preset": {
+        "rgb": [255, 87, 34],
+        "brightness": 100
+    }
+}

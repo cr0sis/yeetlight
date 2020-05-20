@@ -1,0 +1,16 @@
+{
+    "name": "Late Night Code",
+    "author": "barf",
+    "profile": [
+        {
+            "bulb": 0,
+            "rgb": [18, 27, 217],
+            "brightness": 20
+        },
+        {
+            "bulb": 1,
+            "rgb": [110, 23, 187],
+            "brightness": 20
+        }
+    ]
+}

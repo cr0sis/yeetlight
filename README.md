@@ -23,40 +23,17 @@ You need to connect the light using the Yeelight app (or using any other appropr
 
 Edit your config.json file with the IP(s) of you bulb(s).
 
-## To-do
+# Recent Changes/Updates
 
-Convert project gui from tkinter to pysimplegui
-        
-Optional default when changing mode, instead of forced per mode switch. 
-         
-systray
-        
-hotkey menu
-        
-brightness
-        
-warmth(K) 
-        
-colourpicker
-        
-<s>multi bulb support</s>
-        
-sliders
+## Done
+Profiles have been renamed to presets in this commit.
 
-Sunset
-        
-Sunrise
-        
-Home
-        
-Romance
-        
-Date Night
-        
-Movie Night
-        
-rainbow mode
+Presets are json files of settings for a single bulb. Profiles are json files of settings for a number of bulbs.
 
-irc highlights
+Subdirectories can now be used to organise profiles/presets so they are easier to find.
 
-bin day notification
+Added some more error checking, this will be refactored soon.
+
+## Next
+
+Hotkey support 

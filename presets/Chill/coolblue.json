@@ -1,0 +1,8 @@
+{
+    "name": "Cool Blue",
+    "author": "barf",
+    "preset": {
+        "rgb": [93, 173, 226],
+        "brightness": 30
+    }
+}

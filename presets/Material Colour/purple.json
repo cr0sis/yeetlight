@@ -1,0 +1,8 @@
+{
+    "name": "Material Purple",
+    "author": "barf",
+    "preset": {
+        "rgb": [123, 31, 162],
+        "brightness": 100
+    }
+}

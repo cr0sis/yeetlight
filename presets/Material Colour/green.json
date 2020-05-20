@@ -1,0 +1,8 @@
+{
+    "name": "Material Green",
+    "author": "barf",
+    "preset": {
+        "rgb": [67, 160, 71],
+        "brightness": 100
+    }
+}

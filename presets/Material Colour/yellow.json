@@ -1,0 +1,8 @@
+{
+    "name": "Material Yellow",
+    "author": "barf",
+    "preset": {
+        "rgb": [255, 235, 59],
+        "brightness": 100
+    }
+}

@@ -17,19 +17,19 @@
         "custom": [
             {
                 "name": "Tungston 100W",
-                "profile": "tungston100w",
+                "preset": "tungston100w",
                 "bg": "rgb(71, 26, 0)",
                 "fg": "rgb(255, 157, 100)"
             },
             {
                 "name": "Night Mode",
-                "profile": "nighttime",
+                "preset": "nighttime",
                 "bg": "black",
                 "fg": "rgb(134, 0, 134)"
             },
             {
                 "name": "PINK",
-                "profile": "pink",
+                "preset": "pink",
                 "bg": "#FF00FF",
                 "fg": "white"
             }
@@ -42,17 +42,18 @@
         "custom": [
             {
                 "name": "Daylight Bright",
-                "profile": "daytime"
+                "preset": "daytime"
             },
             {
                 "name": "Night Mode",
-                "profile": "nighttime"
+                "preset": "nighttime"
             },
             {
                 "name": "PINK",
-                "profile": "pink"
+                "preset": "pink"
             }
         ],
+        "presets": true,
         "profiles": true,
         "brightness": true,
         "exit": true,

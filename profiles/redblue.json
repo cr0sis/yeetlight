@@ -1,0 +1,16 @@
+{
+    "name": "Red 'n Blue",
+    "author": "barf",
+    "profile": [
+        {
+            "bulb": 0,
+            "rgb": [232, 14, 14],
+            "brightness": 80
+        },
+        {
+            "bulb": 1,
+            "rgb": [14, 34, 232],
+            "brightness": 80
+        }
+    ]
+}

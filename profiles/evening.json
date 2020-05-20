@@ -1,0 +1,14 @@
+{
+    "name": "Evening Home",
+    "author": "barf",
+    "profile": [
+        {
+            "bulb": 0,
+            "preset": "Bulb Emulation/tungston100w"
+        },
+        {
+            "bulb": 1,
+            "off": true
+        }
+    ]
+}
