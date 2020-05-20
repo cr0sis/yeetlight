@@ -12,7 +12,7 @@ from timer import Timer
 
 basedir = os.path.dirname(sys.argv[0])
 
-with open(basedir + '/config.json', 'r') as f:
+with open(basedir + 'config.json', 'r') as f:
     config = json.load(f)
 
 bulbs = []
@@ -36,7 +36,7 @@ class MainWindow(QMainWindow):
         self.main_widget = QWidget(self)
         self.main_widget.setProperty('main', True)
         self.setCentralWidget(self.main_widget)
-        self.setStyleSheet(open(basedir + '/window.css').read())
+        self.setStyleSheet(open(basedir + 'window.css').read())
 
         # controls
         self.grid_layout = QGridLayout(self)
@@ -46,7 +46,7 @@ class MainWindow(QMainWindow):
 
         # tray menu
         self.tray_icon = QSystemTrayIcon(self)
-        self.tray_icon.setIcon(QIcon(basedir + '/bulb_off.ico'))
+        self.tray_icon.setIcon(QIcon(basedir + 'bulb_off.ico'))
         self.tray_menu = QMenu()
         self.buildTray()
 
@@ -80,7 +80,7 @@ class MainWindow(QMainWindow):
             customBtn.setProperty('custom', True)
             if 'bg' in custom_button or 'fg' in custom_button:
                 customBtn.setStyleSheet("background-color: " + custom_button['bg'] + "; color: " + custom_button['fg'] + ";")
-            customBtn.clicked.connect(partial(self.loadJson, custom_button['preset']))
+            customBtn.clicked.connect(partial(self.setProfile, custom_button['profile']))
             self.grid_layout.addWidget(customBtn, 2, pos)
             pos += 1
         if 'brightness' in config['buttons'] and config['buttons']['brightness'] == True:
@@ -108,36 +108,32 @@ class MainWindow(QMainWindow):
         self.tray_menu.addMenu(bulbs_menu)
         self.tray_menu.addSeparator()
 
-        if 'on' in config['tray_menu'] and config['tray_menu']['on']:
+        if config['tray_menu']['on']:
             on_action = QAction("On", self)
             on_action.triggered.connect(partial(self.turnOn))
             self.tray_menu.addAction(on_action)
-        if 'off' in config['tray_menu'] and config['tray_menu']['off']:
+        if config['tray_menu']['off']:
             off_action = QAction("Off", self)
             off_action.triggered.connect(self.turnOff)
             self.tray_menu.addAction(off_action)
-        if ('on' in config['tray_menu'] or 'off' in config['tray_menu']) and (config['tray_menu']['on'] or config['tray_menu']['off']):
+        if config['tray_menu']['on'] or config['tray_menu']['off']:
             self.tray_menu.addSeparator()
 
-        if 'custom' in config['tray_menu']:
-            for custom_item in config['tray_menu']['custom']:
-                custom_action = QAction(custom_item['name'], self)
-                custom_action.triggered.connect(partial(self.loadJson, basedir + '/presets/' + custom_item['preset']))
-                self.tray_menu.addAction(custom_action)
+        for custom_item in config['tray_menu']['custom']:
+            custom_action = QAction(custom_item['name'], self)
+            custom_action.triggered.connect(partial(self.setProfile, custom_item['profile']))
+            self.tray_menu.addAction(custom_action)
 
-        if 'presets' in config['tray_menu'] and config['tray_menu']['presets']:
+        if config['tray_menu']['profiles']:
             self.tray_menu.addSeparator()
-            presets_menu = self.dirMenu('/presets', 'Presets')
-            presets_menu.addSeparator()
-            update_menu = QAction('Update List', self)
-            update_menu.triggered.connect(self.buildTray)
-            presets_menu.addAction(update_menu)
-            self.tray_menu.addMenu(presets_menu)
-            self.tray_menu.addSeparator()
-
-        if 'profiles' in config['tray_menu'] and config['tray_menu']['profiles']:
-            self.tray_menu.addSeparator()
-            profiles_menu = self.dirMenu('/profiles', 'Profiles')
+            profiles_menu = QMenu("Profiles", self)
+            for file in os.listdir(basedir + "profiles"):
+                if file.endswith(".json"):
+                    with open(basedir + "profiles/" + file, 'r') as f:
+                        profile = json.load(f)
+                        change_profile = QAction(profile['profile']['name'], self)
+                        change_profile.triggered.connect(partial(self.setProfile, file.rsplit(".", 1)[0]))
+                        profiles_menu.addAction(change_profile)
             profiles_menu.addSeparator()
             update_menu = QAction('Update List', self)
             update_menu.triggered.connect(self.buildTray)
@@ -170,7 +166,7 @@ class MainWindow(QMainWindow):
         set_colour.triggered.connect(self.setColour)
         self.tray_menu.addAction(set_colour)
         
-        if 'exit' in config['tray_menu'] and config['tray_menu']['exit']:
+        if config['tray_menu']['exit']:
             quit_action = QAction("Exit", self)
             quit_action.triggered.connect(qApp.quit)
             self.tray_menu.addAction(quit_action)
@@ -179,45 +175,15 @@ class MainWindow(QMainWindow):
         self.tray_icon.setContextMenu(self.tray_menu)
         self.tray_icon.show()
 
-    def dirMenu(self, directory, name):
-        dir_menu = QMenu(name, self)
-        for item in os.listdir(basedir + directory):
-            if os.path.isdir(basedir + directory + '/' + item):
-                sub_menu = self.dirMenu(directory + '/' + item, item)
-                dir_menu.addMenu(sub_menu)
-            if item.endswith(".json"):
-                with open(basedir + directory + '/' + item, 'r') as f:
-                    jason_file = json.load(f)
-                    change_preset = QAction(jason_file['name'], self)
-                    change_preset.triggered.connect(partial(self.loadJson, basedir + directory + '/' + item))
-                    dir_menu.addAction(change_preset)
-        return dir_menu
-
-    def loadJson(self, file):
+    def setProfile(self, profile):
         global current
-        with open(file, 'r') as f:
-            json_config = json.load(f)
-
-        if 'preset' in json_config:
-            bulbs[current].loadPreset(file)
-
-        if 'profile' in json_config:
-            for item in json_config['profile']:
-                if 'preset' in item:
-                    bulbs[item['bulb']].loadPreset(basedir + '/presets/' + item['preset'] + '.json')
-                if 'rgb' in item:
-                    bulbs[item['bulb']].bulb.set_rgb(item['rgb'][0], item['rgb'][1], item['rgb'][2])
-                if 'brightness' in item:
-                    bulbs[item['bulb']].bulb.set_brightness(item['brightness'])
-                if 'off' in item:
-                    bulbs[item['bulb']].bulb.turn_off()
+        bulbs[current].loadProfile(profile)
         self.hide()
 
     def setCurrent(self, bulb):
         global current
         current = bulb
         self.buildTray()
-        self.buildControls()
         self.hide()
 
     def turnOn(self):
