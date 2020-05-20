@@ -17,15 +17,15 @@
         "custom": [
             {
                 "name": "Tungston 100W",
-                "preset": "tungston100w",
+                "preset": "Bulb Emulation/tungston100w",
                 "bg": "rgb(71, 26, 0)",
                 "fg": "rgb(255, 157, 100)"
             },
             {
-                "name": "Night Mode",
-                "preset": "nighttime",
-                "bg": "black",
-                "fg": "rgb(134, 0, 134)"
+                "name": "Cool Blue",
+                "preset": "Chill/coolblue",
+                "bg": "rgb(93, 173, 226)",
+                "fg": "white"
             },
             {
                 "name": "PINK",

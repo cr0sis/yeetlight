@@ -82,7 +82,7 @@ class MainWindow(QMainWindow):
             customBtn.setProperty('custom', True)
             if 'bg' in custom_button or 'fg' in custom_button:
                 customBtn.setStyleSheet("background-color: " + custom_button['bg'] + "; color: " + custom_button['fg'] + ";")
-            customBtn.clicked.connect(partial(self.loadJson, custom_button['preset']))
+            customBtn.clicked.connect(partial(self.loadJson, basedir + 'presets/' + custom_button['preset'] + '.json'))
             self.grid_layout.addWidget(customBtn, 2, pos)
             pos += 1
         if 'brightness' in config['buttons'] and config['buttons']['brightness'] == True:
@@ -107,6 +107,11 @@ class MainWindow(QMainWindow):
                 change_current = QAction(bulb.name, self)
                 change_current.triggered.connect(partial(self.setCurrent, id))
                 bulbs_menu.addAction(change_current)
+            bulbs_menu.addSeparator()
+            all_off_action = QAction("Turn All Off", self)
+            all_off_action.triggered.connect(self.turnAllOff)
+            bulbs_menu.addAction(all_off_action)
+
         self.tray_menu.addMenu(bulbs_menu)
         self.tray_menu.addSeparator()
 
@@ -124,7 +129,7 @@ class MainWindow(QMainWindow):
         if 'custom' in config['tray_menu']:
             for custom_item in config['tray_menu']['custom']:
                 custom_action = QAction(custom_item['name'], self)
-                custom_action.triggered.connect(partial(self.loadJson, basedir + 'presets/' + custom_item['preset']))
+                custom_action.triggered.connect(partial(self.loadJson, basedir + 'presets/' + custom_item['preset'] + '.json'))
                 self.tray_menu.addAction(custom_action)
 
         if 'presets' in config['tray_menu'] and config['tray_menu']['presets']:
@@ -216,6 +221,10 @@ class MainWindow(QMainWindow):
     def slugify(self, text):
         text = unidecode.unidecode(text).lower()
         return re.sub(r'[\W_]+', '-', text)
+
+    def turnAllOff(self):
+        for bulb in bulbs:
+            bulb.bulb.turn_off()
 
     def dirMenu(self, directory, name):
         dir_menu = QMenu(name, self)
