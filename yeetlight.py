@@ -9,6 +9,8 @@ import os
 import threading
 from yeetbulb import YeetBulb
 from timer import Timer
+import unidecode
+import re
 
 basedir = os.path.dirname(sys.argv[0])
 
@@ -133,20 +135,16 @@ class MainWindow(QMainWindow):
             update_menu.triggered.connect(self.buildTray)
             presets_menu.addAction(update_menu)
             self.tray_menu.addMenu(presets_menu)
-            self.tray_menu.addSeparator()
 
         if 'profiles' in config['tray_menu'] and config['tray_menu']['profiles']:
-            self.tray_menu.addSeparator()
             profiles_menu = self.dirMenu('profiles', 'Profiles')
             profiles_menu.addSeparator()
             update_menu = QAction('Update List', self)
             update_menu.triggered.connect(self.buildTray)
             profiles_menu.addAction(update_menu)
             self.tray_menu.addMenu(profiles_menu)
-            self.tray_menu.addSeparator()
         
         if 'brightness' in config['tray_menu'] and config['tray_menu']['brightness']:
-            self.tray_menu.addSeparator()
             brightness_menu = QMenu("Brightness", self)
             brightness_100 = QAction("100%", self)
             brightness_100.triggered.connect(partial(self.setBrightness, False, 100))
@@ -164,11 +162,20 @@ class MainWindow(QMainWindow):
             brightness_0.triggered.connect(partial(self.setBrightness, False, 0))
             brightness_menu.addAction(brightness_0)
             self.tray_menu.addMenu(brightness_menu)
-            self.tray_menu.addSeparator()
+
+        self.tray_menu.addSeparator()
 
         set_colour = QAction("Set Colour", self)
         set_colour.triggered.connect(self.setColour)
         self.tray_menu.addAction(set_colour)
+
+        self.tray_menu.addSeparator()
+
+        save_current = QAction("Save Current", self)
+        save_current.triggered.connect(self.saveCurrent)
+        self.tray_menu.addAction(save_current)
+
+        self.tray_menu.addSeparator()
         
         if 'exit' in config['tray_menu'] and config['tray_menu']['exit']:
             quit_action = QAction("Exit", self)
@@ -178,6 +185,37 @@ class MainWindow(QMainWindow):
         self.tray_icon.activated.connect(self.onTrayIconActivated)
         self.tray_icon.setContextMenu(self.tray_menu)
         self.tray_icon.show()
+
+    def saveCurrent(self):
+        global current
+
+        name, ok = QInputDialog.getText(self, 'Save current bulb settings', 'Enter a name for your preset:')
+
+        if ok:
+            file_name = self.slugify(name)
+
+            bulb_info = bulbs[current].bulb.get_properties()
+            rgb = self.getRGB(int(bulb_info['rgb']))
+            brightness = int(bulb_info['current_brightness'])
+
+            data = {}
+            data['name'] = name
+            data['author'] = 'yeetlight'
+            data['preset'] = {}
+            data['preset']['rgb'] = rgb
+            data['preset']['brightness'] = brightness
+            
+            with open('presets/' + file_name + '.json', 'w') as outfile:
+                json.dump(data, outfile, indent=4)
+
+        self.buildTray()
+
+    def getRGB(self, rgbint):
+        return (rgbint // 256 // 256 % 256, rgbint // 256 % 256, rgbint % 256)
+
+    def slugify(self, text):
+        text = unidecode.unidecode(text).lower()
+        return re.sub(r'[\W_]+', '-', text)
 
     def dirMenu(self, directory, name):
         dir_menu = QMenu(name, self)
@@ -263,10 +301,23 @@ class MainWindow(QMainWindow):
     def closeEvent(self, event):
         self.hide()
 
+    def getText(self):
+        self.input = TextInput(self)
+        text = self.input.getText()
+        print(text)
+        self.hide()
+
 class ColorPicker(QColorDialog):
     def __init__(self, parent=None):
         super(ColorPicker, self).__init__(parent)
         self.ui = QColorDialog()
+        self.ui.accepted.connect(self.accept)
+        self.ui.rejected.connect(self.reject)
+
+class TextInput(QInputDialog):
+    def __init__(self, parent=None):
+        super(TextInput, self).__init__(parent)
+        self.ui = QInputDialog()
         self.ui.accepted.connect(self.accept)
         self.ui.rejected.connect(self.reject)
 

@@ -34,6 +34,8 @@ Subdirectories can now be used to organise profiles/presets so they are easier t
 
 Added some more error checking, this will be refactored soon.
 
+Added basic saving. RGB/brightness only for now.
+
 ## Next
 
 Hotkey support 
