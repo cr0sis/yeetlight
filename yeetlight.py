@@ -10,7 +10,7 @@ import threading
 from yeetbulb import YeetBulb
 from timer import Timer
 
-basedir = os.path.dirname(sys.argv[0]) + '/'
+basedir = os.path.dirname(sys.argv[0])
 
 with open(basedir + 'config.json', 'r') as f:
     config = json.load(f)
@@ -122,12 +122,12 @@ class MainWindow(QMainWindow):
         if 'custom' in config['tray_menu']:
             for custom_item in config['tray_menu']['custom']:
                 custom_action = QAction(custom_item['name'], self)
-                custom_action.triggered.connect(partial(self.loadJson, basedir + '/presets/' + custom_item['preset']))
+                custom_action.triggered.connect(partial(self.loadJson, basedir + 'presets/' + custom_item['preset']))
                 self.tray_menu.addAction(custom_action)
 
         if 'presets' in config['tray_menu'] and config['tray_menu']['presets']:
             self.tray_menu.addSeparator()
-            presets_menu = self.dirMenu('/presets', 'Presets')
+            presets_menu = self.dirMenu('presets', 'Presets')
             presets_menu.addSeparator()
             update_menu = QAction('Update List', self)
             update_menu.triggered.connect(self.buildTray)
@@ -137,7 +137,7 @@ class MainWindow(QMainWindow):
 
         if 'profiles' in config['tray_menu'] and config['tray_menu']['profiles']:
             self.tray_menu.addSeparator()
-            profiles_menu = self.dirMenu('/profiles', 'Profiles')
+            profiles_menu = self.dirMenu('profiles', 'Profiles')
             profiles_menu.addSeparator()
             update_menu = QAction('Update List', self)
             update_menu.triggered.connect(self.buildTray)
@@ -204,7 +204,7 @@ class MainWindow(QMainWindow):
         if 'profile' in json_config:
             for item in json_config['profile']:
                 if 'preset' in item:
-                    bulbs[item['bulb']].loadPreset(basedir + '/presets/' + item['preset'] + '.json')
+                    bulbs[item['bulb']].loadPreset(basedir + 'presets/' + item['preset'] + '.json')
                 if 'rgb' in item:
                     bulbs[item['bulb']].bulb.set_rgb(item['rgb'][0], item['rgb'][1], item['rgb'][2])
                 if 'brightness' in item:

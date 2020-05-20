@@ -57,7 +57,7 @@ class YeetBulb:
                     except:
                         print('not supported by bulb')
         else:
-            print('File not found')
+            print('File not found: ' + preset)
     
     def updateProperties(self):
         self.properties = self.bulb.get_properties()
