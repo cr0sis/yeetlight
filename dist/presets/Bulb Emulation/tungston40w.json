@@ -1,0 +1,9 @@
+{
+    "name": "Tungston 40W Bulb",
+    "author": "barf",
+    "preset": {
+        "rgb": [255, 197, 143],
+        "brightness": 80,
+        "color_temp": 2600
+    }
+}

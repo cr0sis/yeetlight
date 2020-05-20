@@ -1,0 +1,8 @@
+{
+    "name": "Material Blue",
+    "author": "barf",
+    "preset": {
+        "rgb": [21, 101, 192],
+        "brightness": 100
+    }
+}

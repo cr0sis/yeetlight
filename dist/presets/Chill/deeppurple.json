@@ -1,0 +1,8 @@
+{
+    "name": "Deep Purple",
+    "author": "barf",
+    "preset": {
+        "rgb": [74, 20, 140],
+        "brightness": 100
+    }
+}

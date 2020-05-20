@@ -4,7 +4,7 @@ block_cipher = None
 
 
 a = Analysis(['yeetlight.py'],
-             pathex=['C:\\Users\\Fred\\AppData\\Local\\Programs\\Python\\Python38-32\\Lib\\site-packages\\PyQt5\\Qt\\bin', 'C:\\Users\\Fred\\Code\\yeetlight'],
+             pathex=['C:\Program Files\Python38', 'C:\\Users\\Fred\\AppData\\Local\\Programs\\Python\\Python38-32\\Lib\\site-packages\\PyQt5\\Qt\\bin', 'C:\\Users\\Fred\\Code\\yeetlight'],
              binaries=[],
              datas=[
                  ('config.json', '.')
@@ -26,11 +26,11 @@ exe = EXE(pyz,
           a.datas,
           [],
           name='yeetlight',
-          debug=False,
+          debug=True,
           bootloader_ignore_signals=False,
           strip=False,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False,
+          console=True,
           icon='bulb_off.ico')

@@ -1,0 +1,8 @@
+{
+    "name": "Pink",
+    "author": "barf",
+    "preset": {
+        "rgb": [255, 0, 255],
+        "brightness": 100
+    }
+}

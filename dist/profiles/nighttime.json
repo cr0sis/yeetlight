@@ -1,9 +1,0 @@
-{
-    "profile": {
-        "name": "Night Time",
-        "author": "barf",
-        "rgb": [255, 147, 41],
-        "brightness": 5,
-        "colour_temp": 1900
-    }
-}

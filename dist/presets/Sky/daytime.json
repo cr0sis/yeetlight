@@ -1,0 +1,9 @@
+{
+    "name": "Day Time Bright",
+    "author": "barf",
+    "preset": {
+        "rgb": [201, 226, 255],
+        "brightness": 100,
+        "colour_temp": 5000
+    }
+}

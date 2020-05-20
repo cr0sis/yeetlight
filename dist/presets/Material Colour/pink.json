@@ -1,0 +1,8 @@
+{
+    "name": "Material Pink",
+    "author": "barf",
+    "preset": {
+        "rgb": [233, 30, 99],
+        "brightness": 100
+    }
+}

@@ -1,9 +1,0 @@
-{
-    "profile": {
-        "name": "Tungston 100W Bulb",
-        "author": "barf",
-        "rgb": [255, 214, 170],
-        "brightness": 100,
-        "color_temp": 2850
-    }
-}
