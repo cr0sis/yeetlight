@@ -1,0 +1,24 @@
+{
+    "name": "Orangy Green",
+    "author": "yeetlight",
+    "profile": [
+        {
+            "bulb": 0,
+            "rgb": [
+                67,
+                160,
+                71
+            ],
+            "brightness": 100
+        },
+        {
+            "bulb": 1,
+            "rgb": [
+                255,
+                87,
+                34
+            ],
+            "brightness": 100
+        }
+    ]
+}

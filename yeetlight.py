@@ -52,6 +52,9 @@ class MainWindow(QMainWindow):
         self.tray_menu = QMenu()
         self.buildTray()
 
+        # hotkeys
+        # hk.register(('control', 'shift', 'h'), callback=partial(print, 'hello'))
+
         screen = QDesktopWidget().screenGeometry()
         widget = self.geometry()
         x = screen.width() - widget.width()
@@ -180,6 +183,10 @@ class MainWindow(QMainWindow):
         save_current.triggered.connect(self.saveCurrent)
         self.tray_menu.addAction(save_current)
 
+        save_profile = QAction("Save Profile", self)
+        save_profile.triggered.connect(self.saveProfile)
+        self.tray_menu.addAction(save_profile)
+
         self.tray_menu.addSeparator()
         
         if 'exit' in config['tray_menu'] and config['tray_menu']['exit']:
@@ -211,6 +218,38 @@ class MainWindow(QMainWindow):
             data['preset']['brightness'] = brightness
             
             with open('presets/' + file_name + '.json', 'w') as outfile:
+                json.dump(data, outfile, indent=4)
+
+        self.buildTray()
+
+    def saveProfile(self):
+        global current
+
+        name, ok = QInputDialog.getText(self, 'Save all bulb settings', 'Enter a name for your profile:')
+
+        if ok:
+            file_name = self.slugify(name)
+
+            data = {}
+            data['name'] = name
+            data['author'] = 'yeetlight'
+
+            profile_bulbs = []
+            for key, bulb in enumerate(bulbs):
+                bulb_info = bulb.bulb.get_properties()
+                rgb = self.getRGB(int(bulb_info['rgb']))
+                brightness = int(bulb_info['current_brightness'])
+                new_bulb = {}
+                new_bulb['bulb'] = key
+                if bulb_info['power'] == 'off':
+                    new_bulb['off'] = True
+                else:
+                    new_bulb['rgb'] = rgb
+                    new_bulb['brightness'] = brightness
+                profile_bulbs.append(new_bulb)
+            data['profile'] = profile_bulbs
+            
+            with open('profiles/' + file_name + '.json', 'w') as outfile:
                 json.dump(data, outfile, indent=4)
 
         self.buildTray()
