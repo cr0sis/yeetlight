@@ -5,7 +5,7 @@ A python GUI script with multi bulb profile support, to control Yeelight (xiaomi
 
 You will need to ensure you have PyQT5 and yeelight installed via pip
 
-`sudo apt-install python3-pyqt5`
+`sudo apt install python3-pyqt5`
 
 and
 
