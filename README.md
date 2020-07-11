@@ -15,7 +15,7 @@ You need to connect the light using the Yeelight app (or using any other appropr
 
 # Finding your lightbulb IP's with nmap
 
-`sudo apt install nmap`
+`apt install nmap`
 
 `nmap -sn 192.168.1.* > nmapresult.txt` Your 1 might be different so change it based on your router, use `ifconfig` to find your ip range.
 
