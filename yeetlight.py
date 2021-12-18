@@ -14,7 +14,7 @@ import re
 
 basedir = os.path.dirname(sys.argv[0])
 
-with open(basedir + 'config.json', 'r') as f:
+with open(basedir + '/config.json', 'r') as f:
     config = json.load(f)
 
 bulbs = []
@@ -38,7 +38,7 @@ class MainWindow(QMainWindow):
         self.main_widget = QWidget(self)
         self.main_widget.setProperty('main', True)
         self.setCentralWidget(self.main_widget)
-        self.setStyleSheet(open(basedir + 'window.css').read())
+        self.setStyleSheet(open(basedir + '/' + 'window.css').read())
 
         # controls
         self.grid_layout = QGridLayout(self)
@@ -58,7 +58,7 @@ class MainWindow(QMainWindow):
         screen = QDesktopWidget().screenGeometry()
         widget = self.geometry()
         x = screen.width() - widget.width()
-        y = (screen.height() - 60) - widget.height()
+        y = (screen.height() - 1000) - widget.height()
         self.move(x, y)
 
     def buildControls(self):
@@ -85,7 +85,7 @@ class MainWindow(QMainWindow):
             customBtn.setProperty('custom', True)
             if 'bg' in custom_button or 'fg' in custom_button:
                 customBtn.setStyleSheet("background-color: " + custom_button['bg'] + "; color: " + custom_button['fg'] + ";")
-            customBtn.clicked.connect(partial(self.loadJson, basedir + 'presets/' + custom_button['preset'] + '.json'))
+            customBtn.clicked.connect(partial(self.loadJson, basedir + 'presets' + '/' + custom_button['preset'] + '.json'))
             self.grid_layout.addWidget(customBtn, 2, pos)
             pos += 1
         if 'brightness' in config['buttons'] and config['buttons']['brightness'] == True:
@@ -132,7 +132,7 @@ class MainWindow(QMainWindow):
         if 'custom' in config['tray_menu']:
             for custom_item in config['tray_menu']['custom']:
                 custom_action = QAction(custom_item['name'], self)
-                custom_action.triggered.connect(partial(self.loadJson, basedir + 'presets/' + custom_item['preset'] + '.json'))
+                custom_action.triggered.connect(partial(self.loadJson, basedir + 'presets' + '/' + custom_item['preset'] + '.json'))
                 self.tray_menu.addAction(custom_action)
 
         if 'presets' in config['tray_menu'] and config['tray_menu']['presets']:
@@ -217,7 +217,7 @@ class MainWindow(QMainWindow):
             data['preset']['rgb'] = rgb
             data['preset']['brightness'] = brightness
             
-            with open('presets/' + file_name + '.json', 'w') as outfile:
+            with open('presets' + '/' + file_name + '.json', 'w') as outfile:
                 json.dump(data, outfile, indent=4)
 
         self.buildTray()
@@ -249,7 +249,7 @@ class MainWindow(QMainWindow):
                 profile_bulbs.append(new_bulb)
             data['profile'] = profile_bulbs
             
-            with open('profiles/' + file_name + '.json', 'w') as outfile:
+            with open('profiles' + '/' + file_name + '.json', 'w') as outfile:
                 json.dump(data, outfile, indent=4)
 
         self.buildTray()
@@ -267,12 +267,12 @@ class MainWindow(QMainWindow):
 
     def dirMenu(self, directory, name):
         dir_menu = QMenu(name, self)
-        for item in os.listdir(basedir + directory):
+        for item in os.listdir(basedir + '/' + directory):
             if os.path.isdir(basedir + directory + '/' + item):
                 sub_menu = self.dirMenu(directory + '/' + item, item)
                 dir_menu.addMenu(sub_menu)
             if item.endswith(".json"):
-                with open(basedir + directory + '/' + item, 'r') as f:
+                with open(basedir + '/' + directory + '/' + item, 'r') as f:
                     jason_file = json.load(f)
                     change_preset = QAction(jason_file['name'], self)
                     change_preset.triggered.connect(partial(self.loadJson, basedir + directory + '/' + item))
@@ -290,7 +290,7 @@ class MainWindow(QMainWindow):
         if 'profile' in json_config:
             for item in json_config['profile']:
                 if 'preset' in item:
-                    bulbs[item['bulb']].loadPreset(basedir + 'presets/' + item['preset'] + '.json')
+                    bulbs[item['bulb']].loadPreset(basedir + '/' + 'presets' + '/' + item['preset'] + '.json')
                 if 'rgb' in item:
                     bulbs[item['bulb']].bulb.set_rgb(item['rgb'][0], item['rgb'][1], item['rgb'][2])
                 if 'brightness' in item:
