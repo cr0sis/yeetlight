@@ -12,9 +12,9 @@ from timer import Timer
 import unidecode
 import re
 
-basedir = os.path.dirname(sys.argv[0])
-
-with open(basedir + '/config.json', 'r') as f:
+basedir = '/home/cr0/yeetlight/'
+#os.path.dirname(sys.argv[0])
+with open(basedir + '/' + 'config.json', 'r') as f:
     config = json.load(f)
 
 bulbs = []
@@ -132,7 +132,7 @@ class MainWindow(QMainWindow):
         if 'custom' in config['tray_menu']:
             for custom_item in config['tray_menu']['custom']:
                 custom_action = QAction(custom_item['name'], self)
-                custom_action.triggered.connect(partial(self.loadJson, basedir + 'presets' + '/' + custom_item['preset'] + '.json'))
+                custom_action.triggered.connect(partial(self.loadJson, basedir + '/' + 'presets' + '/' + custom_item['preset'] + '.json'))
                 self.tray_menu.addAction(custom_action)
 
         if 'presets' in config['tray_menu'] and config['tray_menu']['presets']:
@@ -275,7 +275,7 @@ class MainWindow(QMainWindow):
                 with open(basedir + '/' + directory + '/' + item, 'r') as f:
                     jason_file = json.load(f)
                     change_preset = QAction(jason_file['name'], self)
-                    change_preset.triggered.connect(partial(self.loadJson, basedir + directory + '/' + item))
+                    change_preset.triggered.connect(partial(self.loadJson, basedir + '/' + directory + '/' + item))
                     dir_menu.addAction(change_preset)
         return dir_menu
 
